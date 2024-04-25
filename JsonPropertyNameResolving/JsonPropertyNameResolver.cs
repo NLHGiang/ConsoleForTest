@@ -1,24 +1,20 @@
 ﻿using Newtonsoft.Json.Serialization;
 
-namespace JsonPropertyNameResolving
+namespace JsonPropertyNameResolving;
+
+internal class JsonPropertyNameResolver : DefaultContractResolver
 {
-    public class JsonPropertyNameResolver : DefaultContractResolver
+    private readonly Dictionary<string, string> propertyMapping;
+
+    public JsonPropertyNameResolver(Dictionary<string, string> propertyMapping)
     {
-        private readonly Dictionary<string, string> propertyMapping;
+        this.propertyMapping = propertyMapping;
+    }
 
-        public JsonPropertyNameResolver(Dictionary<string, string> propertyMapping)
-        {
-            this.propertyMapping = propertyMapping;
-        }
+    protected override string ResolvePropertyName(string propertyName)
+    {
+        if (propertyMapping.ContainsKey(propertyName)) return propertyMapping[propertyName];
 
-        protected override string ResolvePropertyName(string propertyName)
-        {
-            if (propertyMapping.ContainsKey(propertyName))
-            {
-                return propertyMapping[propertyName];
-            }
-
-            return base.ResolvePropertyName(propertyName);
-        }
+        return base.ResolvePropertyName(propertyName);
     }
 }

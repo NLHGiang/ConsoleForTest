@@ -1,11 +1,12 @@
 ﻿// Create a sample object
+
 using JsonPropertyNameResolving;
 
 DemoObject demoObject = new()
 {
     Field1 = "abc",
     Field2 = 99,
-    Field3 = true,
+    Field3 = true
 };
 
 // Serialize the object using the custom contract resolver
